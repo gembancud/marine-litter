@@ -6,7 +6,7 @@ import config
 
 
 fourcc = cv2.VideoWriter_fourcc(*"XVID")
-out = cv2.VideoWriter("output.avi", fourcc, 20.0, (WIDTH, HEIGHT))
+out = cv2.VideoWriter("output.avi", fourcc, 20.0, (config.WIDTH, config.HEIGHT))
 
 
 def gstreamer_pipeline(
