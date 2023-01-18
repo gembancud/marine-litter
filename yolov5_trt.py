@@ -125,7 +125,7 @@ class YoLov5TRT(object):
                     box,
                     batch_image_raw[i],
                     label="{}:{:.2f}".format(
-                        categories[int(result_classid[j])], result_scores[j]
+                        config.CATEGORIES[int(result_classid[j])], result_scores[j]
                     ),
                 )
         return batch_image_raw, end - start, result_boxes
