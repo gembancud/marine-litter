@@ -7,6 +7,7 @@ import pycuda.autoinit
 import pycuda.driver as cuda
 import tensorrt as trt
 from utils import plot_one_box
+import config
 
 
 class YoLov5TRT(object):
@@ -241,7 +242,11 @@ class YoLov5TRT(object):
         pred = np.reshape(output[1:], (-1, 6))[:num, :]
         # Do nms
         boxes = self.non_max_suppression(
-            pred, origin_h, origin_w, conf_thres=CONF_THRESH, nms_thres=IOU_THRESHOLD
+            pred,
+            origin_h,
+            origin_w,
+            conf_thres=config.CONF_THRESH,
+            nms_thres=config.IOU_THRESHOLD,
         )
         result_boxes = boxes[:, :4] if len(boxes) else np.array([])
         result_scores = boxes[:, 4] if len(boxes) else np.array([])
