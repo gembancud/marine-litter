@@ -47,8 +47,8 @@ print(' Lat = %f'%x.Lat)
 #x.L76X_Baidu_Coordinates(x.Lat, x.Lon)
 #print('Baidu coordinate %f'%x.Lat_Baidu,end='')
 #print(',%f'%x.Lon_Baidu)
-print('Google coordinate %f'%x.Lat_Goodle,end='')
-print(',%f'%x.Lon_Goodle)
+#print('Google coordinate %f'%x.Lat_Goodle,end='')
+#print(',%f'%x.Lon_Goodle)
     
 m = math.floor(time.time())/60%60
 h = math.floor(time.time())/3600%60
