@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
         # Configure streams
         config = rs.config()
-        config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
+        config.enable_stream(rs.stream.depth, cfg.WIDTH, cfg.HEIGHT, rs.format.z16, 30)
 
         # Start streaming
         pipeline.start(config)
