@@ -43,14 +43,13 @@ if __name__ == "__main__":
     if args.headless:
         print("Headless mode")
 
-    # load custom plugin and engine
-    PLUGIN_LIBRARY = config.PLUGIN_LIBRARY
-    ENGINE_FILE_PATH = config.ENGINE_FILE_PATH
-
-    if len(sys.argv) > 1:
-        ENGINE_FILE_PATH = sys.argv[1]
-    if len(sys.argv) > 2:
-        PLUGIN_LIBRARY = sys.argv[2]
+    if args.model == "yolov7":
+        PLUGIN_LIBRARY = config.YOLOV5_PLUGIN_LIBRARY
+        ENGINE_FILE_PATH = config.YOLOV5_ENGINE_FILE_PATH
+    elif args.model == "yolov5":
+        # load custom plugin and engine
+        PLUGIN_LIBRARY = config.YOLOV5_PLUGIN_LIBRARY
+        ENGINE_FILE_PATH = config.YOLOV5_ENGINE_FILE_PATH
 
     ctypes.CDLL(PLUGIN_LIBRARY)
 
