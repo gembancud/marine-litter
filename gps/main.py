@@ -44,8 +44,8 @@ print('%d'%x.Time_S)
 
 print('Lon = %f'%x.Lon,end='')
 print(' Lat = %f'%x.Lat)
-value_lon = Lon
-value_lat = Lat
+value_lon = x.Lon
+value_lat = x.Lat
 #x.L76X_Baidu_Coordinates(x.Lat, x.Lon)
 #print('Baidu coordinate %f'%x.Lat_Baidu,end='')
 #print(',%f'%x.Lon_Baidu)
