@@ -9,8 +9,8 @@ import cv2
 import pycuda.autoinit
 import pycuda.driver as cuda
 
-from camera import gstreamer_pipeline
-from yolov5_trt import YoLov5TRT, warmUpThread
+from camera.camera import gstreamer_pipeline
+from models.yolov5_trt import YoLov5TRT, warmUpThread
 import config
 
 
