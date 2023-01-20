@@ -6,7 +6,7 @@ import numpy as np
 import pycuda.autoinit
 import pycuda.driver as cuda
 import tensorrt as trt
-from utils import plot_one_box
+from misc.utils import plot_one_box
 import config
 
 

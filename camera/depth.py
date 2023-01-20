@@ -7,7 +7,7 @@
 
 # First import the library
 import pyrealsense2 as rs
-from .. import config as cfg
+import config as cfg
 
 if __name__ == "__main__":
     try:
