@@ -1,4 +1,4 @@
-from main import Lat, Lon
+from main import value_lat, value_lon
 
-print('Lon = %f'%x.Lon,end='')
-print(' Lat = %f'%x.Lat)
+print(value_lon)
+print(value_lat)
