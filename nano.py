@@ -5,6 +5,7 @@ import ctypes
 import os
 import shutil
 import sys
+import argparse
 import cv2
 import pycuda.autoinit
 import pycuda.driver as cuda
@@ -15,6 +16,34 @@ import config
 
 
 if __name__ == "__main__":
+    # Add argparser
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--model",
+        type=str,
+        choices=["yolov5", "yolov7"],
+        default="yolov5",
+        help="model architecture",
+    )
+    parser.add_argument("--headless", action="store_true", help="Run in headless mode")
+
+    parser.add_argument(
+        "--camera",
+        type=str,
+        choices=["module", "depth"],
+        default="module",
+        help="Choose camera to use",
+    )
+    parser.add_argument("--gps", action="store_true", help="Use GPS")
+    parser.add_argument("--save-video", action="store_true", help="Save video")
+    parser.add_argument("--track", action="store_true", help="Track objects")
+    parser.add_argument("--save-frames", action="store_true", help="Save frames")
+    parser.add_argument("--save-csv", action="store_true", help="Save csv")
+    args = parser.parse_args()
+    print(args.echo)
+    if args.headless:
+        print("Headless mode")
+
     # load custom plugin and engine
     PLUGIN_LIBRARY = config.PLUGIN_LIBRARY
     ENGINE_FILE_PATH = config.ENGINE_FILE_PATH
