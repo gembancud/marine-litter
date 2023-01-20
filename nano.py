@@ -11,7 +11,7 @@ import pycuda.autoinit
 import pycuda.driver as cuda
 
 from camera.camera import gstreamer_pipeline
-from models.yolov5_trt import YoLov5TRT, warmUpThread
+from models.yolov5.yolov5_trt import YoLov5TRT, warmUpThread
 import config
 
 
@@ -40,7 +40,6 @@ if __name__ == "__main__":
     parser.add_argument("--save-frames", action="store_true", help="Save frames")
     parser.add_argument("--save-csv", action="store_true", help="Save csv")
     args = parser.parse_args()
-    print(args.echo)
     if args.headless:
         print("Headless mode")
 
