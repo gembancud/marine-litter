@@ -67,6 +67,9 @@ if __name__ == "__main__":
         )
     # load coco labels
 
+    if args.gps:
+        from gps.main import gps
+
     categories = config.CATEGORIES
 
     if os.path.exists("output/"):
@@ -91,7 +94,19 @@ if __name__ == "__main__":
                 # print(label)
                 # cv2.imshow(WINDOW_TITLE, frame[0])
 
+                if args.gps:
+                    lon, lat = gps()
+                    cv2.putText(
+                        frame,
+                        f"GPS: {lon}, {lat}",
+                        (10, 30),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        1,
+                        (0, 0, 255),
+                        2,
+                    )
                 cv2.imshow(WINDOW_TITLE, frame)
+                # write text at the top left of the frame
                 # out.write(frame)
 
                 keyCode = cv2.waitKey(10) & 0xFF
@@ -101,8 +116,7 @@ if __name__ == "__main__":
         finally:
             if args.camera == "module":
                 VIDEO_CAPTURE.release()
-
-            else:
+            elif args.camera == "depth":
                 pipeline.stop()
             # out.release()
             cv2.destroyAllWindows()
