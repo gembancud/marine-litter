@@ -42,15 +42,13 @@ if __name__ == "__main__":
         print("Headless mode")
 
     if args.model == "yolov7":
-        PLUGIN_LIBRARY = config.YOLOV5_PLUGIN_LIBRARY
-        ENGINE_FILE_PATH = config.YOLOV5_ENGINE_FILE_PATH
+        pass
     elif args.model == "yolov5":
         # load custom plugin and engine
         PLUGIN_LIBRARY = config.YOLOV5_PLUGIN_LIBRARY
         ENGINE_FILE_PATH = config.YOLOV5_ENGINE_FILE_PATH
+        ctypes.CDLL(PLUGIN_LIBRARY)
         yolov5_wrapper = YoLov5TRT(ENGINE_FILE_PATH)
-
-    ctypes.CDLL(PLUGIN_LIBRARY)
 
     if args.camera == "module":
         from camera.camera import gstreamer_pipeline
@@ -153,4 +151,7 @@ if __name__ == "__main__":
 
     finally:
         # destroy the instance
-        yolov5_wrapper.destroy()
+        if args.model == "yolov7":
+            pass
+        elif args.model == "yolov5":
+            yolov5_wrapper.destroy()
