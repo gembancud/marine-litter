@@ -62,7 +62,9 @@ if __name__ == "__main__":
         from camera.depth import pipeline
         import numpy as np
 
-        read = lambda: pipeline.wait_for_frames().get_color_frame()
+        read = lambda: np.asanyarray(
+            pipeline.wait_for_frames().get_color_frame().get_data()
+        )
     # load coco labels
 
     categories = config.CATEGORIES
