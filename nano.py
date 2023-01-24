@@ -103,9 +103,14 @@ if __name__ == "__main__":
                         cv2.FONT_HERSHEY_SIMPLEX,
                         1,
                         (0, 0, 255),
+                        1,
                         2,
                     )
-                cv2.imshow(WINDOW_TITLE, frame)
+                if (
+                    cv2.getWindowProperty(config.WINDOW_TITLE, cv2.WND_PROP_AUTOSIZE)
+                    >= 0
+                ):
+                    cv2.imshow(WINDOW_TITLE, frame)
                 # write text at the top left of the frame
                 # out.write(frame)
 

@@ -1,4 +1,4 @@
-import L76X
+from . import L76X
 import time
 import math
 
