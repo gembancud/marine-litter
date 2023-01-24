@@ -18,53 +18,58 @@ x.L76X_Send_Command(x.SET_NMEA_OUTPUT);
 x.L76X_Exit_BackupMode();
 
 
-h = 0
-m = 0
-s = 0
-h1 = 0
-m1 = 0
-s1 = 0
+#h = 0
+#m = 0
+#s = 0
+#h1 = 0
+#m1 = 0
+#s1 = 0
 
-m1 = math.floor(time.time())/60%60
-h1 = math.floor(time.time())/3600%60
-s1 = math.floor(time.time())%60
-if(m1 >= 59):
-    h1 = h1 + 1;
-    m1 = m1 + 1 -60;
-m1 = m1 +1
-while(1):
+#m1 = math.floor(time.time())/60%60
+#h1 = math.floor(time.time())/3600%60
+#s1 = math.floor(time.time())%60
+#if(m1 >= 59):
+#    h1 = h1 + 1;
+#    m1 = m1 + 1 -60;
+#m1 = m1 +1
+#while(1):
+def gps():
     x.L76X_Gat_GNRMC()
+    x.Status == 1
     if(x.Status == 1):
         print('Already positioned')
     else:
         print('No positioning')
-    print('Time %d:'%x.Time_H,end='')
-    print('%d:'%x.Time_M,end='')
-    print('%d'%x.Time_S)
-
-    print('Lon = %f'%x.Lon,end='')
-    print(' Lat = %f'%x.Lat)
-    x.L76X_Baidu_Coordinates(x.Lat, x.Lon)
-    print('Baidu coordinate %f'%x.Lat_Baidu,end='')
-    print(',%f'%x.Lon_Baidu)
-    print('Google coordinate %f'%x.Lat_Goodle,end='')
-    print(',%f'%x.Lon_Goodle)
-    
-    m = math.floor(time.time())/60%60
-    h = math.floor(time.time())/3600%60
-    s = math.floor(time.time())%60
-    if(h >= h1 and m >= m1 and s >= s1):
-        print("Enter backup mode \r\n");
-        x.L76X_Send_Command(x.SET_PERPETUAL_BACKUP_MODE)
-        input("Please enter any character to exit backup mode\r\n")
-        print("Exit backup mode \r\n")
-        x.L76X_Exit_BackupMode();
-        m1 = math.floor(time.time())/60%60
-        h1 = math.floor(time.time())/3600%60
-        m1 = m1 +1 
-        if(m1 >= 59):
-            h1 = h1 + 1;
-            m1 = m1 + 1 -60;
+    #print('Time %d:'%x.Time_H,end='')
+    #print('%d:'%x.Time_M,end='')
+    #print('%d'%x.Time_S)
+    #print('Lon = %f'%x.Lon,end='')
+    #print(' Lat = %f'%x.Lat)
+    value_lon = x.Lon
+    value_lat = x.Lat
+    print('Longitude: %f'%value_lon)
+    print('Lattitude: %f'%value_lat)
+    return value_lon, value_lat
+    #x.L76X_Baidu_Coordinates(x.Lat, x.Lon)
+    #print('Baidu coordinate %f'%x.Lat_Baidu,end='')
+    #print(',%f'%x.Lon_Baidu)
+    #print('Google coordinate %f'%x.Lat_Goodle,end='')
+    #print(',%f'%x.Lon_Goodle)
+    #m = math.floor(time.time())/60%60
+    #h = math.floor(time.time())/3600%60
+    #s = math.floor(time.time())%60
+    #if(h >= h1 and m >= m1 and s >= s1):
+    #    print("Enter backup mode \r\n");
+    #    x.L76X_Send_Command(x.SET_PERPETUAL_BACKUP_MODE)
+    #    input("Please enter any character to exit backup mode\r\n")
+    #    print("Exit backup mode \r\n")
+    #    x.L76X_Exit_BackupMode();
+    #    m1 = math.floor(time.time())/60%60
+    #    h1 = math.floor(time.time())/3600%60
+    #    m1 = m1 +1 
+    #    if(m1 >= 59):
+    #        h1 = h1 + 1;
+    #        m1 = m1 + 1 -60;
         
 # except:
     # GPIO.cleanup()
