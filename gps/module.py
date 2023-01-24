@@ -1,3 +1,3 @@
 from main import gps
 
-gps(0, 0)
+lon, lat = gps()
