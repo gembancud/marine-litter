@@ -107,7 +107,7 @@ if __name__ == "__main__":
                     # lon, lat = gps.lon.value, gps.lat.value
                     cv2.putText(
                         frame,
-                        f"GPS: {lon}, {lat}",
+                        f"GPS: {lon.value}, {lat.value}",
                         (10, 30),
                         cv2.FONT_HERSHEY_SIMPLEX,
                         1,

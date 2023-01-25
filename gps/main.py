@@ -66,6 +66,6 @@ def loop(lon, lat):
 
     while True:
         x.L76X_Gat_GNRMC()
-        lon = x.Lon
-        lat = x.Lat
+        lon.value = x.Lon
+        lat.value = x.Lat
         time.sleep(1)
