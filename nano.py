@@ -72,7 +72,7 @@ if __name__ == "__main__":
         import multiprocessing
 
         gps = GPS()
-        process = multiprocessing.Process(target=gps)
+        process = multiprocessing.Process(target=gps.loop)
         process.start()
 
     categories = config.CATEGORIES
