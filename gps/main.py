@@ -1,5 +1,6 @@
 import time
 import math
+import multiprocessing
 import sys
 
 sys.path.append(".")
@@ -10,8 +11,8 @@ class GPS:
     gps = None
     interval = 1
     last_executed = 0
-    lat = -1
-    lon = -1
+    lat = multiprocessing.Value("f", -1)
+    lon = multiprocessing.Value("f", -1)
 
     def __init__(self):
         x = L76X.L76X()
@@ -42,6 +43,8 @@ class GPS:
 
         return self.lon, self.lat
 
-    def loop(self):
+    def loop(self, lon, lat):
         while True:
-            self.__call__()
+            self.gps.L76X_Gat_GNRMC()
+            lon = self.gps.Lon
+            lat = self.gps.Lat
