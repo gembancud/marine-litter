@@ -69,8 +69,11 @@ if __name__ == "__main__":
 
     if args.gps:
         from gps.main import GPS
+        import multiprocessing
 
         gps = GPS()
+        process = multiprocessing.Process(target=gps)
+        process.start()
 
     categories = config.CATEGORIES
 
@@ -97,7 +100,7 @@ if __name__ == "__main__":
                 # cv2.imshow(WINDOW_TITLE, frame[0])
 
                 if args.gps:
-                    lon, lat = gps()
+                    lon, lat = gps.lon, gps.lat
                     cv2.putText(
                         frame,
                         f"GPS: {lon}, {lat}",
