@@ -17,10 +17,10 @@ x.L76X_Send_Command(x.SET_NMEA_OUTPUT)
 
 
 x.L76X_Exit_BackupMode()
-x.L76X_Gat_GNRMC()
 
 
 def gps():
+    x.L76X_Gat_GNRMC()
     if x.Status == 1:
         print("Already positioned")
     else:
