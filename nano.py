@@ -68,7 +68,9 @@ if __name__ == "__main__":
     # load coco labels
 
     if args.gps:
-        from gps.main import gps
+        from gps.main import GPS
+
+        gps = GPS()
 
     categories = config.CATEGORIES
 
