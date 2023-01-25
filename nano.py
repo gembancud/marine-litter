@@ -68,12 +68,16 @@ if __name__ == "__main__":
     # load coco labels
 
     if args.gps:
-        from gps.main import GPS
+        from gps.main import loop
         import multiprocessing
 
-        gps = GPS()
-        process = multiprocessing.Process(target=gps.loop, args=(gps.lon, gps.lat))
+        lon = multiprocessing.Value("d", 0.0)
+        lat = multiprocessing.Value("d", 0.0)
+        process = multiprocessing.Process(target=loop, args=(lon, lat))
         process.start()
+        # gps = GPS()
+        # process = multiprocessing.Process(target=gps.loop, args=(gps.lon, gps.lat))
+        # process.start()
 
     categories = config.CATEGORIES
 
@@ -100,7 +104,7 @@ if __name__ == "__main__":
                 # cv2.imshow(WINDOW_TITLE, frame[0])
 
                 if args.gps:
-                    lon, lat = gps.lon.value, gps.lat.value
+                    # lon, lat = gps.lon.value, gps.lat.value
                     cv2.putText(
                         frame,
                         f"GPS: {lon}, {lat}",
