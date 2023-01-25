@@ -100,7 +100,7 @@ if __name__ == "__main__":
                 # cv2.imshow(WINDOW_TITLE, frame[0])
 
                 if args.gps:
-                    lon, lat = gps.lon, gps.lat
+                    lon, lat = gps.lon.value, gps.lat.value
                     cv2.putText(
                         frame,
                         f"GPS: {lon}, {lat}",
