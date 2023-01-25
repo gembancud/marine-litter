@@ -10,6 +10,8 @@ class GPS:
     gps = None
     interval = 1
     last_executed = 0
+    lat = -1
+    lon = -1
     
     def __init__(self):
         x = L76X.L76X()
@@ -30,13 +32,13 @@ class GPS:
 
     def __call__(self):
         if time.time() - self.last_executed < self.interval:
-            return -1, -1
+            return self.lon, self.lat
         self.gps.L76X_Gat_GNRMC()
-        value_lon = self.gps.Lon
-        value_lat = self.gps.Lat
+        self.lon = self.gps.Lon
+        self.lat = self.gps.Lat
         
         # save time stamp last executed
         self.last_executed = time.time()
 
-        return value_lon, value_lat
+        return self.lon, self.lat
         
