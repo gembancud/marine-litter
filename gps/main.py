@@ -8,28 +8,19 @@ from . import L76X
 
 
 class GPS:
-    gps = None
-    interval = 1
-    last_executed = 0
     lat = multiprocessing.Value("f", -1)
     lon = multiprocessing.Value("f", -1)
 
     def __init__(self):
-        self.last_executed = time.time()
+        self.process = multiprocessing.Process(
+            target=self.loop, args=(self.lon, self.lat)
+        )
 
-    def __call__(self):
-        if time.time() - self.last_executed < self.interval:
-            return self.lon, self.lat
-        self.gps.L76X_Gat_GNRMC()
-        self.lon = self.gps.Lon
-        self.lat = self.gps.Lat
+    def start(self):
+        self.process.start()
 
-        # save time stamp last executed
-        self.last_executed = time.time()
-
-        return self.lon, self.lat
-
-    def loop(self, lon, lat):
+    @staticmethod
+    def loop(lon, lat):
         x = L76X.L76X()
         x.L76X_Set_Baudrate(9600)
         x.L76X_Send_Command(x.SET_NMEA_BAUDRATE_115200)
@@ -43,11 +34,10 @@ class GPS:
 
         x.L76X_Exit_BackupMode()
 
-        self.gps = x
         while True:
-            self.gps.L76X_Gat_GNRMC()
-            lon = self.gps.Lon
-            lat = self.gps.Lat
+            x.L76X_Gat_GNRMC()
+            lon.value = x.Lon
+            lat.value = x.Lat
 
 
 def loop(lon, lat):
