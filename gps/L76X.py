@@ -1,7 +1,10 @@
-import Jetson.GPIO as GPIO
-from . import config
 import math
 import time
+import Jetson.GPIO as GPIO
+import sys
+
+sys.path.append(".")
+from . import config
 
 Temp = "0123456789ABCDEF*"
 BUFFSIZE = 1100
