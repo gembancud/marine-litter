@@ -131,9 +131,7 @@ class YoLov5TRT(object):
         return (
             batch_image_raw,
             end - start,
-            result_boxes,
-            result_scores,
-            result_classid,
+            [result_boxes, result_scores, result_classid],
         )
 
     def destroy(self):

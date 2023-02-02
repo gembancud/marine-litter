@@ -125,12 +125,14 @@ if __name__ == "__main__":
                         (
                             frame,
                             t,
-                            result_boxes,
-                            result_scores,
-                            result_ids,
+                            results,
                         ) = model_wrapper.infer([frame])
 
                         if args.track:
+
+                            result_boxes = results[0]
+                            result_scores = results[1]
+                            result_ids = results[2]
                             frame = tracker.update(
                                 frame, result_boxes, result_scores, result_ids
                             )
