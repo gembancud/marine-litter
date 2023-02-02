@@ -32,6 +32,7 @@ if __name__ == "__main__":
         default="module",
         help="Choose camera to use",
     )
+    parser.add_argument("--no-detect", action="store_true", help="Do not use detection")
     parser.add_argument("--gps", action="store_true", help="Use GPS")
     parser.add_argument("--save-video", action="store_true", help="Save video")
     parser.add_argument("--track", action="store_true", help="Track objects")
@@ -48,7 +49,7 @@ if __name__ == "__main__":
         PLUGIN_LIBRARY = config.YOLOV5_PLUGIN_LIBRARY
         ENGINE_FILE_PATH = config.YOLOV5_ENGINE_FILE_PATH
         ctypes.CDLL(PLUGIN_LIBRARY)
-        yolov5_wrapper = YoLov5TRT(ENGINE_FILE_PATH)
+        model_wrapper = YoLov5TRT(ENGINE_FILE_PATH)
 
     if args.camera == "module":
         from camera.camera import gstreamer_pipeline
@@ -73,8 +74,6 @@ if __name__ == "__main__":
 
         gps = GPS()
         gps.start()
-        # process = multiprocessing.Process(target=gps.loop, args=(gps.lon, gps.lat))
-        # process.start()
 
     categories = config.CATEGORIES
 
@@ -83,13 +82,14 @@ if __name__ == "__main__":
     os.makedirs("output/")
     # a YoLov5TRT instance
     try:
-        print("batch size is", yolov5_wrapper.batch_size)
+        print("batch size is", model_wrapper.batch_size)
 
-        for i in range(10):
-            # create a new thread to do warm_up
-            thread1 = warmUpThread(yolov5_wrapper)
-            thread1.start()
-            thread1.join()
+        if not args.no_detect:
+            for i in range(10):
+                # create a new thread to do warm_up
+                thread1 = warmUpThread(model_wrapper)
+                thread1.start()
+                thread1.join()
 
         WINDOW_TITLE = config.WINDOW_TITLE
         window_handle = cv2.namedWindow(WINDOW_TITLE, cv2.WINDOW_AUTOSIZE)
@@ -116,6 +116,8 @@ if __name__ == "__main__":
                     cv2.getWindowProperty(config.WINDOW_TITLE, cv2.WND_PROP_AUTOSIZE)
                     >= 0
                 ):
+                    if not args.no_detect:
+                        frame = model_wrapper.infer([frame])[0]
                     cv2.imshow(WINDOW_TITLE, frame)
                 # write text at the top left of the frame
                 # out.write(frame)
@@ -137,4 +139,4 @@ if __name__ == "__main__":
         if args.model == "yolov7":
             pass
         elif args.model == "yolov5":
-            yolov5_wrapper.destroy()
+            model_wrapper.destroy()
