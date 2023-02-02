@@ -127,6 +127,7 @@ if __name__ == "__main__":
                             t,
                             results,
                         ) = model_wrapper.infer([frame])
+                        frame = frame[0]
 
                         if args.track:
 
