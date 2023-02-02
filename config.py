@@ -12,3 +12,6 @@ YOLOV5_ENGINE_FILE_PATH = "models/yolov5/aceluya_n.engine"
 CONF_THRESH = 0.5
 IOU_THRESHOLD = 0.4
 CATEGORIES = ["trash"]
+
+# Tracking configuration
+TRACK_POINTS = "iou"  # "iou" or "bbox"

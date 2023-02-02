@@ -34,8 +34,8 @@ if __name__ == "__main__":
     )
     parser.add_argument("--no-detect", action="store_true", help="Do not use detection")
     parser.add_argument("--gps", action="store_true", help="Use GPS")
-    parser.add_argument("--save-video", action="store_true", help="Save video")
     parser.add_argument("--track", action="store_true", help="Track objects")
+    parser.add_argument("--save-video", action="store_true", help="Save video")
     parser.add_argument("--save-frames", action="store_true", help="Save frames")
     parser.add_argument("--save-csv", action="store_true", help="Save csv")
     args = parser.parse_args()
@@ -75,11 +75,16 @@ if __name__ == "__main__":
         gps = GPS()
         gps.start()
 
+    if args.track:
+        from misc.tracker import MyTracker
+
+        tracker = MyTracker()
+
     categories = config.CATEGORIES
 
-    if os.path.exists("output/"):
-        shutil.rmtree("output/")
-    os.makedirs("output/")
+    # if os.path.exists("output/"):
+    #     shutil.rmtree("output/")
+    # os.makedirs("output/")
     # a YoLov5TRT instance
     try:
         print("batch size is", model_wrapper.batch_size)
@@ -117,7 +122,19 @@ if __name__ == "__main__":
                     >= 0
                 ):
                     if not args.no_detect:
-                        frame = model_wrapper.infer([frame])[0]
+                        (
+                            frame,
+                            t,
+                            result_boxes,
+                            result_scores,
+                            result_ids,
+                        ) = model_wrapper.infer([frame])
+
+                        if args.track:
+                            frame = tracker.update(
+                                frame, result_boxes, result_scores, result_ids
+                            )
+
                     cv2.imshow(WINDOW_TITLE, frame)
                 # write text at the top left of the frame
                 # out.write(frame)

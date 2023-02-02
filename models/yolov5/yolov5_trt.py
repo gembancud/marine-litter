@@ -128,7 +128,13 @@ class YoLov5TRT(object):
                         config.CATEGORIES[int(result_classid[j])], result_scores[j]
                     ),
                 )
-        return batch_image_raw, end - start, result_boxes
+        return (
+            batch_image_raw,
+            end - start,
+            result_boxes,
+            result_scores,
+            result_classid,
+        )
 
     def destroy(self):
         # Remove any context from the top of the context stack, deactivating it.
