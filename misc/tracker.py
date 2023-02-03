@@ -65,10 +65,8 @@ class MyTracker:
             distance_threshold=distance_threshold,
         )
 
-    def update(self, frame, yolo_detections, scores, ids):
-        detections = self.yolo_detections_to_norfair_detections(
-            yolo_detections, scores, ids
-        )
+    def update(self, frame, boxes, scores, ids):
+        detections = self.yolo_detections_to_norfair_detections(boxes, scores, ids)
         tracked_objects = self.tracker.update(detections=detections)
 
         norfair.draw_points(frame, detections)
@@ -77,19 +75,17 @@ class MyTracker:
         return frame
 
     @staticmethod
-    def yolo_detections_to_norfair_detections(
-        yolo_detections, scores, ids
-    ) -> List[Detection]:
+    def yolo_detections_to_norfair_detections(boxes, scores, ids) -> List[Detection]:
         """convert detections_as_xyxy to norfair detections"""
         norfair_detections: List[Detection] = []
-        for yolo_detection, score, class_id in zip(yolo_detections, scores, ids):
+        for box, score, class_id in zip(boxes, scores, ids):
             bbox = np.array(
                 [
-                    [yolo_detection[0], yolo_detection[1]],
-                    [yolo_detection[2], yolo_detection[3]],
+                    [box[0], box[1]],
+                    [box[2], box[3]],
                 ]
             )
-            scores = np.array([score[0], score[1]])
+            scores = np.array([score[0]])
             norfair_detections.append(
                 Detection(points=bbox, scores=scores, label=int(class_id))
             )
