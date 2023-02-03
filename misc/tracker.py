@@ -85,7 +85,7 @@ class MyTracker:
                     [box[2], box[3]],
                 ]
             )
-            scores = np.array([score[0]])
+            scores = np.array([score])
             norfair_detections.append(
                 Detection(points=bbox, scores=scores, label=int(class_id))
             )
