@@ -53,7 +53,7 @@ class MyTracker:
     tracker = None
 
     def __init__(self):
-        distance_function = "iou" if config.TRACK_POINTS == "bbox" else "euclidean"
+        distance_function = "iou" if config.TRACK_POINTS == "bbox" else "mean_euclidean"
         distance_threshold = (
             DISTANCE_THRESHOLD_BBOX
             if config.TRACK_POINTS == "bbox"
