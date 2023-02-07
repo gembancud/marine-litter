@@ -14,4 +14,4 @@ IOU_THRESHOLD = 0.4
 CATEGORIES = ["trash"]
 
 # Tracking configuration
-TRACK_POINTS = "iou"  # "iou" or "bbox"
+TRACK_POINTS = "bbox"  # "iou" or "bbox"
